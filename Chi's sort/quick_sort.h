@@ -1,27 +1,30 @@
 
-#include<iostream>
+#ifndef QUICK_SORT_H
+#define QUICK_SORT_H
 using namespace std;
-int n,a[1003];
 void swap(int &x,int &y){int z=y;y=x;x=z;}
 
 
-class Array
+class Sort
 {
+//    template<typename T>;
     public:
-        void quick_sort(int l,int r)
+        void quick_sort(int a[],int l,int r)
         {
             if(l>=r)return;
-            int pivot=partition(l,r);
-            quick_sort(l,pivot-1);
-            quick_sort(pivot+1,r);
+            int pivot=partition(a,l,r);
+            quick_sort(a,l,pivot-1);
+            quick_sort(a,pivot+1,r);
+            /*
             for(int i=1;i<=n;++i)
             {
                 cout<<a[i]<<" ";
             }
             cout<<endl<<"-------------------"<<endl;
+            */
         }
     private:
-        int partition(int l,int r)
+        int partition(int a[],int l,int r)
         {
             int left=l,right=r;
             while(left<right)
@@ -42,11 +45,6 @@ class Array
             swap(a[l],a[right]);
             return right;
         }
-}
-int main()
-{
-cin>>n;for(int i=1;i<=n;++i)cin>>a[i];
+};
 
-    return 0;
-}
-
+#endif

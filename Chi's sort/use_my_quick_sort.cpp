@@ -10,7 +10,6 @@ int main()
     for(int i=1;i<=n;i++)cin>>a[i];
     Sort my_quick_sort;
     my_quick_sort.quick_sort(a,1,n);
-    for (int  i = 1; i <=n;++i)cout<<a[i]<<" ";
+    for (int  i=1;i<=n;++i)cout<<a[i]<<" ";
     return 0;
-    
 }

@@ -6,6 +6,45 @@
 
 #ifndef NEXT_PERMUTATION_H_
 #define NEXT_PERMUTATION_H_
+
+
+class Array
+{
+    public:
+        Array(int N,int *P)
+        {
+            this->n=N;
+            for(int i=1;i<=n;++i)p[i]=P[i];
+        }
+        ~Array()
+        
+        int n,p[1002];
+        bool next_permutation()
+        {
+        
+            int i,j;
+            for(i=n-1;i>=1;--i)if(p[i]<p[i+1])break;
+            if(!i)return false;
+            for(j=n;j>i;--j)
+            {
+                if(p[j]>p[i])
+                {
+                    swap(p[i],p[j]);
+                    break;
+                }
+            }
+            ++i;j=n;
+            for(;i<=j;++i,--j)swap(p[i],p[j]);
+            return true;
+        }
+    private:
+        void swap(int &x,int &y)
+        {
+            int z=y;
+            y=x;
+            x=z;
+        }   
+};
 /*
 class Function
 {
@@ -39,31 +78,6 @@ class Function
         }
 };
 */
-void swap(int &x,int &y)
-{
-    int z=y;
-    y=x;
-    x=z;
-}
-bool next_permutation(int n,int *p)
-{
-//    int p[2002];
-    int i,j;
-//    for(i=1;i<=n;++i)p[i]=P[i];
-    for(i=n-1;i>=1;--i)if(p[i]<p[i+1])break;
-    if(!i)return false;
-    for(j=n;j>i;--j)
-    {
-        if(p[j]>p[i])
-        {
-            swap(p[i],p[j]);
-            break;
-        }
-    }
-    ++i;j=n;
-    for(;i<=j;++i,--j)swap(p[i],p[j]);
-    return true;
-}
 
 #endif 
 /*
@@ -108,4 +122,3 @@ int main()
     return 0;
 }
 */
-

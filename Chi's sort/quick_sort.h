@@ -29,8 +29,8 @@ class Sort
             int left=l,right=r;
             while(left<right)
             {
-            while(right>left&&a[right]>=a[l])--right;
-            while(left<right&&a[left]<=a[l])++left;
+                while(right>left&&a[right]>=a[l])--right;
+                while(left<right&&a[left]<=a[l])++left;
 /*
 注意点：
 两个while顺序不能换&&至少有一个得有取等
@@ -40,7 +40,7 @@ class Sort
 当l=r+1的时候，如果++left在前，那么就会直接left=right=r
 指针需要再细细品
 */
-            swap(a[left],a[right]);
+                swap(a[left],a[right]);
             }
             swap(a[l],a[right]);
             return right;

@@ -96,6 +96,8 @@ void splay(int &root,int id)
 {
     if(id==root)return;
     for(;Pa(id)!=0;)
+    //id会自己递变，通过id的父亲?0来判断是否到达根节点
+    //不能以id!=root 来当作判断语句
     {
         int parent=Pa(id);
 //       cout<<"id/parent"<<id<<" "<<parent<<endl;

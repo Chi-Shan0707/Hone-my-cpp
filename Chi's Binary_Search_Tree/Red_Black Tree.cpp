@@ -18,7 +18,7 @@ struct Tree_Node
 {
     int val,col;
     int pa;
-    int child[2]//left,right
+    int child[2];//left,right
     int sz;
 }tr[N];
 

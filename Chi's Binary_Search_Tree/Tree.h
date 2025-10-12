@@ -25,11 +25,18 @@ class Binary_Search_Tree
         int which_one(int id){return tr[Pa(id)].child[RIGHT]==id;}
         Binary_Search_Tree(int n)
         {
-            tr=new Tree_Node[n];
+            tr=new Tree_Node[n];//动态数组
             root=node_tot=0;
+//初始化
+
+/*
+待查询：为何new的要赋值初始化
+*/
+            for(int i=0;i<n;++i)tr[i].val=tr[i].pa=tr[i].child[LEFT]=tr[i].child[RIGHT]=tr[i].cnt=tr[i].sz=0;
         }
         ~Binary_Search_Tree()
         {
+//new的东东要考delete，这里指针没有删掉，删的是指针对应的内存区域上的值
             delete [] tr;
         }
         void rotate(int id)
@@ -63,3 +70,5 @@ class Binary_Search_Tree
 };
 
 #endif
+
+//注意额外换行符

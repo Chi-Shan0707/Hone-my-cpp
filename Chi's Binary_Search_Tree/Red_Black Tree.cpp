@@ -8,7 +8,7 @@
 #include<iostream>
 #include "Tree.h"
 using namespace std;
-#define nil 0
+#define nil 1
 #define RED 1
 #define BLACK 0
 void fixup(Binary_Search_Tree &BST,int id,bool *col)
@@ -23,7 +23,7 @@ void fixup(Binary_Search_Tree &BST,int id,bool *col)
             col[parent]=BLACK;
             return;
         }
-        uncle=BST.tr[parent].child[1^BST.which_one(parent)];
+        uncle=BST.tr[grandpa].child[1^BST.which_one(parent)];
         if(col[uncle]==RED)
         {
             col[parent]=BLACK;
@@ -33,21 +33,33 @@ void fixup(Binary_Search_Tree &BST,int id,bool *col)
         }
         else if(BST.which_one(parent)&BST.which_one(id))
         {
+            if(grandpa==BST.root)BST.root=parent;
             BST.rotate(parent);
+/*
+id-pa-grandpa不共线，故id连转两次
+*/
             col[parent]=BLACK;
             col[grandpa]=RED;
             break;
         }
         else
         {
+            if(grandpa==BST.root)BST.root=id;
             BST.rotate(id);
             BST.rotate(id);
+/*
+id-pa-grandpa三点共线，故直接转pa比较合适
+*/
             col[id]=BLACK;
             col[grandpa]=RED;
             break;
         }
-        
+/*
+1. 重点一：理解旋转的原因和逻辑：也要和splay一样，同侧情况转1次，已测情况转2次
+2. 重点二：splay中最后统一更改root，这里需要我们手动判断root是否需要更新
+*/
     }
+
     col[BST.root]=BLACK;
 }
 void insert(Binary_Search_Tree &BST,int val,bool *col)
@@ -68,7 +80,7 @@ void insert(Binary_Search_Tree &BST,int val,bool *col)
     }
     BST.tr[id=++BST.node_tot]=(Tree_Node){val
                                 ,parent,
-                                {0,0},
+                                {1,1},
                                 1,1};
     col[id]=RED;
     if(parent==nil){
@@ -77,24 +89,41 @@ void insert(Binary_Search_Tree &BST,int val,bool *col)
         return;
     }
     BST.tr[parent].child[BST.tr[parent].val<val]=id;
-    //建立双向父子关系
-//    cout<<"插入完毕"<<endl;
     BST.update(id);
     fixup(BST,id,col);
 }
-void print_tree(Binary_Search_Tree BST,int *tr,int *col)
-{
-    
-}
+
 int main()
 {
     int n;
     bool *col;
     cin>>n;
-    col=new bool[n+4];
+    col=new bool[n+5];
     for(int id=0;id<n;++id)col[id]=0;
     Binary_Search_Tree BST(n+4);
+    BST.tr[BST.root=BST.node_tot=1]=(Tree_Node)
+    {
+                                0
+                                ,1,
+                                {1,1},
+                                0,0
+    };
+    col[1]=BLACK;
     for(int i=0;i<n;++i)
+    {
+        int val;
+        cin>>val;
+        insert(BST,val,col);
+//        cout<<"当前插入完毕"<<i<<endl;
+    }
+/*
+    cout<<"****"<<endl<<BST.root<<endl;
+    for(int id=1;id<=BST.node_tot;++id)
+    {
+        cout<<"id:"<<id<<" val:"<<BST.tr[id].val<<" pa:"<<BST.tr[id].pa<<" child:"<<BST.tr[id].child[LEFT]<<" "<<BST.tr[id].child[RIGHT]<<" cnt:"<<BST.tr[id].cnt<<" sz:"<<BST.tr[id].sz<<"col"<<col[id]<<endl;
+    }
+ //   for(int id=1;id<=BST.node_tot;++id)cout<<id<<" "<<col[id]<<endl;
+ for(int i=n-1;i<=n-1;++i)
     {
         int val;
         cin>>val;
@@ -105,6 +134,6 @@ int main()
     {
         cout<<"id:"<<id<<" val:"<<BST.tr[id].val<<" pa:"<<BST.tr[id].pa<<" child:"<<BST.tr[id].child[LEFT]<<" "<<BST.tr[id].child[RIGHT]<<" cnt:"<<BST.tr[id].cnt<<" sz:"<<BST.tr[id].sz<<"col"<<col[id]<<endl;
     }
- //   for(int id=1;id<=BST.node_tot;++id)cout<<id<<" "<<col[id]<<endl;
+*/
     return 0;
 }

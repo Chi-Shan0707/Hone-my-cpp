@@ -72,7 +72,7 @@ int main()
 {
     int n;
     cin>>n;
-    Binary_Search_Tree BST(n);
+    Binary_Search_Tree BST(n+4);
     for(int i=0;i<n;i++)
     {
         int val;

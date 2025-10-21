@@ -2,14 +2,16 @@
 #ifndef QUICK_SORT_H
 #define QUICK_SORT_H
 using namespace std;
-void swap(int &x,int &y){int z=y;y=x;x=z;}
+template<typename T>
+void swap(T &x,T &y){T z=y;y=x;x=z;}
+//template<typename T>只能被用一次，有东东用掉了就得再写一遍
 
-
+template<typename T>
 class Sort
 {
 //    template<typename T>;
     public:
-        void quick_sort(int a[],int l,int r)
+        void quick_sort(T a[],int l,int r)
         {
             if(l>=r)return;
             int pivot=partition(a,l,r);
@@ -24,7 +26,7 @@ class Sort
             */
         }
     private:
-        int partition(int a[],int l,int r)
+        int partition(T a[],int l,int r)
         {
             int left=l,right=r;
             while(left<right)

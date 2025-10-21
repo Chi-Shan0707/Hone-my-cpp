@@ -41,6 +41,10 @@ class Binary_Search_Tree
 //new的东东要靠delete，这里指针没有删掉，删的是指针对应的内存区域上的值
             delete [] tr;
         }
+/*
+我的rotate和寻常rotate定义不大一样
+别的rotate(node)都是针对node当作某个子树的根节点，把node一个儿子转上来，把node转下去
+*/
         void rotate(int id)
         {
             int parent=Pa(id);

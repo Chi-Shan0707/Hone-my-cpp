@@ -7,18 +7,25 @@
 #ifndef NEXT_PERMUTATION_H_
 #define NEXT_PERMUTATION_H_
 
-
+#include<iostream>
+template<typename T>
 class Array
 {
     public:
-        Array(int N,int *P)
+        Array(int N,T *P)
         {
             this->n=N;
+            p=new T [N+4];
             for(int i=1;i<=n;++i)p[i]=P[i];
         }
-        ~Array()
-        
-        int n,p[1002];
+        ~ Array()
+        {
+            delete []p;
+//手动清理内存，防止内存泄漏
+//否则只会删去指针
+        }
+
+
         bool next_permutation()
         {
         
@@ -37,10 +44,17 @@ class Array
             for(;i<=j;++i,--j)swap(p[i],p[j]);
             return true;
         }
-    private:
-        void swap(int &x,int &y)
+        void print()
         {
-            int z=y;
+            for(int i=1;i<=n;++i)std::cout<<p[i]<<" ";
+            std::cout<<std::endl;
+        }
+    private:
+        int n;
+        T *p;
+        void swap(T &x,T&y)
+        {
+            T z=y;
             y=x;
             x=z;
         }   

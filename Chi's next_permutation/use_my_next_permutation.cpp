@@ -8,12 +8,13 @@ int main() {
     cin>>m;
     
     for(int i=1;i<=m;++i)cin>>b[i];
-    Array array_under_operation(m,b);
+    Array<int> my_array(m,b);
     do
     {
-        for(int i=1;i<=m;++i)cout<<array_under_operation.p[i]<<" ";
-        cout<<endl<<"-------------------------"<<endl;
-    } while (array_under_operation.next_permutation());
-    
+        my_array.print();
+    }while (my_array.next_permutation());
+    cout<<endl;
+    cout<<"原数组并未被更改"<<endl;
+    for(int i=1;i<=m;++i)cout<<b[i]<<" ";
     return 0;
 }

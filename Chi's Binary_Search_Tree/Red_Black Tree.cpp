@@ -23,34 +23,39 @@ void fixup(Binary_Search_Tree &BST,int id,bool *col)
             col[parent]=BLACK;
             return;
         }
+//如果父亲是整棵树根节点，其就是黑色了
         uncle=BST.tr[grandpa].child[1^BST.which_one(parent)];
         if(col[uncle]==RED)
         {
             col[parent]=BLACK;
             col[uncle]=BLACK;
             col[grandpa]=RED;
-            id=grandpa;
+            id=grandpa;//继续向上更新
         }
-        else if(BST.which_one(parent)&BST.which_one(id))
+        else if(BST.which_one(parent)^BST.which_one(id))
         {
-            if(grandpa==BST.root)BST.root=parent;
-            BST.rotate(parent);
+//这种情况是三点不共线
+            if(grandpa==BST.root)BST.root=id;
+//记得更新根节点
+            BST.rotate(id);
+            BST.rotate(id);
+
 /*
-id-pa-grandpa不共线，故id连转两次
+id-pa-grandpa不共线，故id连转两次(id往上转，转到原先grandpa的位置)
 */
-            col[parent]=BLACK;
+            col[id]=BLACK;
             col[grandpa]=RED;
             break;
         }
         else
         {
-            if(grandpa==BST.root)BST.root=id;
-            BST.rotate(id);
-            BST.rotate(id);
 /*
 id-pa-grandpa三点共线，故直接转pa比较合适
-*/
-            col[id]=BLACK;
+*/            
+            if(grandpa==BST.root)BST.root=parent;
+//记得更新根节点
+            BST.rotate(parent);
+            col[parent]=BLACK;//相当于颜色取反
             col[grandpa]=RED;
             break;
         }
@@ -59,7 +64,7 @@ id-pa-grandpa三点共线，故直接转pa比较合适
 2. 重点二：splay中最后统一更改root，这里需要我们手动判断root是否需要更新
 */
     }
-
+    //勿忘
     col[BST.root]=BLACK;
 }
 void insert(Binary_Search_Tree &BST,int val,bool *col)
